@@ -1,0 +1,59 @@
+# Virtual environments
+.venv
+venv
+env
+
+# Large datasets and media
+dataset
+runs
+videos
+extracted_frames
+__pycache__
+
+# Model files (YOLO checkpoints - too large for image)
+*.pt
+*.onnx
+*.pth
+
+# Media files
+*.jpg
+*.png
+*.jpeg
+*.gif
+*.mp4
+*.avi
+*.mov
+
+# Development and OS files
+.git
+.gitignore
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache
+.coverage
+htmlcov/
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Python
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+README.md
+docs/

@@ -101,3 +101,8 @@ KMeans clustering was applied to group users based on behavioral similarities re
 
 ## Conclusion
 This project highlights the effectiveness of Machine Learning techniques in predicting social media addiction risk using behavioral and psychological factors. Comparative analysis of multiple algorithms showed that Random Forest provided the best overall performance. The project can be further extended into real-world healthcare, educational, and behavioral monitoring applications.
+
+---
+API 
+<img width="959" height="930" alt="Screenshot 2026-05-26 093712" src="https://github.com/user-attachments/assets/499dde01-8184-4a06-b4d3-6630f9e735f2" />
+

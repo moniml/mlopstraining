@@ -1,0 +1,202 @@
+{
+  "name": "asgm",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "HR Details Finder",
+        "formDescription": "Enter a company name to find HR and recruiter details",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Company Name",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d1ac7c79-a528-4c81-9e56-1369932e2135",
+      "name": "On form submission",
+      "webhookId": "360163f4-0c1d-4571-aa05-50dc662bef59"
+    },
+    {
+      "parameters": {
+        "q": "=site:linkedin.com/in HR {{$json[\"Company Name\"]}}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApi",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "372a607d-a53e-4cef-a2e3-688159aa3580",
+      "name": "Google search",
+      "credentials": {
+        "serpApi": {
+          "id": "7gwWtz60o1lsl94u",
+          "name": "SerpApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = $json.organic_results || [];\n\nreturn results.map(result => {\n  const title = result.title || \"\";\n  const parts = title.split(\" - \");\n\n  return {\n    json: {\n      Name: parts[0] || \"\",\n      \"Profile URL\": result.link || \"\",\n      Headline: parts[1] || \"\",\n      Company: parts[2] || \"\",\n      Status: \"Found\"\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "e498897e-c20d-4ac3-9c97-fe4b65bd2e83",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1gh0DTMms4FZF9DJyRwo7uqzXKkJU6hI4IV8FJaH-5Y4",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{$json.Name}}",
+            "Profile URL": "={{$json[\"Profile URL\"]}}",
+            "Headline": "={{$json.Headline}}",
+            "Company": "={{$json.Company}}",
+            "Status": "={{$json.Status}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profile URL",
+              "displayName": "Profile URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Headline",
+              "displayName": "Headline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        0
+      ],
+      "id": "902a2993-fed0-4f44-9bcc-063325787e91",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "0bnegdjnb3LxGArm",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Google search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google search": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "0e048e21-3d76-4ef5-bf8f-585ada4cd97c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c13a750ddcb703be2db11a1342f18571a1656ecbcf1b0003ba30fc32cd250ea0"
+  },
+  "nodeGroups": [],
+  "id": "oBZB7cJ0PFxbBen4",
+  "tags": []
+}
